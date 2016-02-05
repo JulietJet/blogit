@@ -17,4 +17,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Modifying(clearAutomatically = true)
     @Query("update User u set u.isUserEnabled = :status where u.id = :userId")
     void changeUserStatus(@Param("userId") Long userId, @Param("status") boolean isEnabled);
+
+    @Query("select CASE WHEN count(u)>0 then 'true' else 'false' END "
+            + "from User u where u.username = :username or u.email = :email")
+    boolean isUserAlreadyExists(@Param("username")String userName, @Param("email") String email);
 }

@@ -27,7 +27,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void saveUser(UserDTO user) {
-        userRepository.save(UserDTO.toEntity(user));
+    public UserDTO registerUser(UserDTO user) {
+        User newUser = UserDTO.toEntity(user);
+        userRepository.save(newUser);
+//        UserRole role = new UserRole();
+//        role.setRole("USER");
+        return UserDTO.fromEntity(newUser);
+    }
+
+    @Override
+    public boolean isUserAlreadyExists(String userName, String email) {
+        return userRepository.isUserAlreadyExists(userName, email);
     }
 }

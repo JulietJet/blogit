@@ -10,19 +10,19 @@
     <!-- enable use-expressions -->
 
     <http auto-config="true" use-expressions="true">
-        <intercept-url pattern="/user" access="isAuthenticated()" />
-        <intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')" />
+        <intercept-url pattern="/dashboard" access="isAuthenticated()" />
+        <!--<intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')" />-->
 
         <!-- access denied page -->
         <access-denied-handler error-page="/403" />
 
         <form-login
-                login-page="/login"
-                default-target-url="/user"
-                authentication-failure-url="/login?error"
+                login-page="/"
+                default-target-url="/dashboard"
+                authentication-failure-url="/"
                 username-parameter="username"
                 password-parameter="password" />
-        <logout logout-success-url="/login?logout"  logout-url="/logout"/>
+        <logout logout-success-url="/login"  logout-url="/logout"/>
         <!-- enable csrf protection -->
         <!--<csrf/>-->
     </http>
@@ -32,8 +32,7 @@
             <jdbc-user-service data-source-ref="dataSource"
                                users-by-username-query=
                                        "select username,password,enabled from users where username=?"
-                               authorities-by-username-query=
-                                       "select username,role from user_roles where username =?  " />
+                               />
         </authentication-provider>
     </authentication-manager>
 </beans:beans>

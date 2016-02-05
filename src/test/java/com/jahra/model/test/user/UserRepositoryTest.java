@@ -44,4 +44,10 @@ public class UserRepositoryTest extends DBUnit {
         Assert.assertEquals(false, user.isUserEnabled());
     }
 
+    @Test
+    public void checkIsAlreadyExists() {
+        boolean isExist = userRepository.isUserAlreadyExists("test1", "test@test.com");
+        Assert.assertTrue(isExist);
+    }
+
 }

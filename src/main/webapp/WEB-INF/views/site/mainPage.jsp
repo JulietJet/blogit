@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%--
   Created by IntelliJ IDEA.
   User: Артём
@@ -13,14 +14,14 @@
     <title>Title</title>
 </head>
 <body>
-<a href="/registration">Registration</a>
-
-<form:form class="form-signin" name='loginForm' commandName="user"
+<a href="/registration">Registration</a> <a href="/?lang=en">EN</a> | <a href="/?lang=ru">RU</a>
+<div>${SPRING_SECURITY_LAST_EXCEPTION}</div>
+<form class="form-signin" name='loginForm' commandName="user"
       action="/j_spring_security_check" method='post'>
-    <h2 class="form-signin-heading" style="text-align: center">Please sign in</h2>
-    <form:input path="username" type="text" placeholder="Username" required="true" autofocus="true"/>
-    <form:password path="password" class="form-control" placeholder="Password" required="true" />
-    <input class="btn btn-lg btn-primary btn-block" name="submit" type="submit" value="Sign In" />
-</form:form>
+    <input name="username" type="text" placeholder="Username" required autofocus/>
+    <input type="password" name="password" class="form-control" placeholder="Password" required />
+    <input name="submit" type="submit" value="Sign In" />
+</form>
+<spring:message code="hello" />
 </body>
 </html>

@@ -11,4 +11,5 @@ public interface UserService {
     void changeUserStatus(Long id, boolean isEnabled);
     User getUserById(Long id);
     boolean isUserAlreadyExists(String userName, String email);
+    User findByUsername(String username);
 }

@@ -21,4 +21,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("select CASE WHEN count(u)>0 then 'true' else 'false' END "
             + "from User u where u.username = :username or u.email = :email")
     boolean isUserAlreadyExists(@Param("username")String userName, @Param("email") String email);
+
+    User findByUsername(String username);
 }

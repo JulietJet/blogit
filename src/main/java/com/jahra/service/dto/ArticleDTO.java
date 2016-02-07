@@ -1,8 +1,9 @@
 package com.jahra.service.dto;
 
 import com.jahra.model.Article;
+import com.jahra.utils.ArticleUtils;
 
-import java.util.Date;
+import java.text.ParseException;
 
 /**
  * Created by Артём on 01.02.2016.
@@ -13,7 +14,7 @@ public class ArticleDTO {
     private String title;
     private String content;
     private String url;
-    private Date creationDate;
+    private String creationDate;
 
     public Long getId() {
         return id;
@@ -23,11 +24,11 @@ public class ArticleDTO {
         this.id = id;
     }
 
-    public Date getCreationDate() {
+    public String getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(Date creationDate) {
+    public void setCreationDate(String creationDate) {
         this.creationDate = creationDate;
     }
 
@@ -60,9 +61,30 @@ public class ArticleDTO {
         if (dto == null) {
             return article;
         }
-        article.setTitle(dto.getTitle());
-        article.setContent(dto.getContent());
-        article.setCreationDate(dto.getCreationDate());
+        try {
+            article.setTitle(dto.getTitle());
+            article.setContent(dto.getContent());
+            article.setCreationDate(ArticleUtils.getSimpleDateFormat().parse(dto.getCreationDate()));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         return article;
     }
+
+    public static ArticleDTO fromEntity(Article article) {
+        ArticleDTO dto = new ArticleDTO();
+        if (article == null) {
+            return dto;
+        }
+        dto.setId(article.getId());
+        dto.setContent(article.getContent());
+        dto.setTitle(article.getTitle());
+        dto.setUrl(ArticleUtils.getUrl(article.getBlog().getName())
+                + "/" + article.getId() + "/"
+                + ArticleUtils.getUrl(article.getTitle()));
+        dto.setCreationDate(ArticleUtils.getSimpleDateFormat().format(article.getCreationDate()));
+        return dto;
+    }
+
+
 }

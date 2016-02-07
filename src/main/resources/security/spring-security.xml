@@ -11,6 +11,7 @@
 
     <http auto-config="true" use-expressions="true">
         <intercept-url pattern="/dashboard" access="isAuthenticated()" />
+        <intercept-url pattern="/dashboard/**" access="isAuthenticated()" />
         <!--<intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')" />-->
 
         <!-- access denied page -->
@@ -19,7 +20,7 @@
         <form-login
                 login-page="/"
                 default-target-url="/dashboard"
-                authentication-failure-url="/"
+                authentication-failure-handler-ref="customAuthenticationFailureHandler"
                 username-parameter="username"
                 password-parameter="password" />
         <logout logout-success-url="/login"  logout-url="/logout"/>
@@ -27,12 +28,11 @@
         <!--<csrf/>-->
     </http>
 
+
+
     <authentication-manager>
-        <authentication-provider>
-            <jdbc-user-service data-source-ref="dataSource"
-                               users-by-username-query=
-                                       "select username,password,enabled from users where username=?"
-                               />
+        <authentication-provider user-service-ref="authenticationService">
+            <password-encoder ref="bCryptPasswordEncoder"/>
         </authentication-provider>
     </authentication-manager>
 </beans:beans>

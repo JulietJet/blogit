@@ -2,7 +2,6 @@ package com.jahra.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Set;
 
 /**
  * Created by Артём on 29.07.15.
@@ -20,7 +19,7 @@ public class User implements Serializable {
     @Column(name = "username", nullable = false, unique = true, length = 64)
     private String username;
 
-    @Column(name = "password", nullable = false, length = 24)
+    @Column(name = "password", nullable = false)
     private String password;
 
     @Column(name = "status", nullable = false)
@@ -29,28 +28,19 @@ public class User implements Serializable {
     @Column(name = "email", nullable = false, unique = true, length = 124)
     private String email;
 
-    @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true, cascade = {CascadeType.REMOVE})
-    @JoinColumn(name = "user_id")
-    private Set<UserRole> userRoles;
+    @Column(name = "user_role", nullable = false, unique = false)
+    private String userRole;
 
-    @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true, cascade = {CascadeType.REMOVE}, mappedBy = "owner")
-    private Set<Blog> blogs;
+    @OneToOne(fetch = FetchType.LAZY, orphanRemoval = true, cascade = {CascadeType.REMOVE}, mappedBy = "owner")
+    private Blog blog;
 
 
-    public Set<Blog> getBlogs() {
-        return blogs;
+    public Blog getBlog() {
+        return blog;
     }
 
-    public void setBlogs(Set<Blog> blogs) {
-        this.blogs = blogs;
-    }
-
-    public Set<UserRole> getUserRoles() {
-        return userRoles;
-    }
-
-    public void setUserRoles(Set<UserRole> userRoles) {
-        this.userRoles = userRoles;
+    public void setBlog(Blog blogs) {
+        this.blog = blogs;
     }
 
     public Long getId() {
@@ -93,4 +83,11 @@ public class User implements Serializable {
         this.email = email;
     }
 
+    public String getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(String userRole) {
+        this.userRole = userRole;
+    }
 }

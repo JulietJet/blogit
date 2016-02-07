@@ -1,14 +1,16 @@
 <dataset>
     <users user_id="1"
-          username="test1"
-          password="12345qwerty"
-          status="true"
-          email="test@test.com"/>
+           username="test1"
+           password="12345qwerty"
+           status="true"
+           user_role="ROLE_USER"
+           email="test@test.com"/>
     <users user_id="2"
-          username="test2"
-          password="12345qwerty"
-          status="true"
-          email="tes1t@tes1t.com"/>
+           username="test2"
+           password="12345qwerty"
+           status="true"
+           user_role="ROLE_USER"
+           email="tes1t@tes1t.com"/>
     <user_blog blog_id="1"
                user_id="1"
                creation_date="2016-01-01 11:11:11"
@@ -17,8 +19,4 @@
                user_id="2"
                creation_date="2016-01-01 11:11:11"
                name="TestBlog2"/>
-    <user_blog blog_id="3"
-               user_id="2"
-               creation_date="2016-01-01 11:11:11"
-               name="TestBlog3"/>
 </dataset>

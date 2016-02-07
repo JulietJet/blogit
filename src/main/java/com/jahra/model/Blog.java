@@ -21,22 +21,22 @@ public class Blog implements Serializable {
     @Column(name = "name", nullable = false, unique = true)
     private String name;
 
-    @Column(name = "creation_date", nullable = false, unique = false)
-    private Date creationDate;
+    @Column(name = "last_update_date", nullable = false, unique = false)
+    private Date lastUpdateDate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @OneToOne
+    @JoinColumn(name = "user_id", unique = true, nullable = false)
     private User owner;
 
     @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true, cascade = {CascadeType.REMOVE}, mappedBy = "blog")
     private Set<Article> articles;
 
-    public Date getCreationDate() {
-        return creationDate;
+    public Date getLastUpdateDate() {
+        return lastUpdateDate;
     }
 
-    public void setCreationDate(Date creationDate) {
-        this.creationDate = creationDate;
+    public void setLastUpdateDate(Date lastUpdateDate) {
+        this.lastUpdateDate = lastUpdateDate;
     }
 
     public Long getId() {

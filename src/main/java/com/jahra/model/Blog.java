@@ -3,7 +3,7 @@ package com.jahra.model;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 /**
  * Created by Артём on 31.01.2016.
@@ -28,8 +28,17 @@ public class Blog implements Serializable {
     @JoinColumn(name = "user_id", unique = true, nullable = false)
     private User owner;
 
-    @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true, cascade = {CascadeType.REMOVE}, mappedBy = "blog")
-    private Set<Article> articles;
+    @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true, cascade = {CascadeType.REMOVE}, mappedBy = "blog")
+    private List<Article> articles;
+
+
+    public List<Article> getArticles() {
+        return articles;
+    }
+
+    public void setArticles(List<Article> articles) {
+        this.articles = articles;
+    }
 
     public Date getLastUpdateDate() {
         return lastUpdateDate;

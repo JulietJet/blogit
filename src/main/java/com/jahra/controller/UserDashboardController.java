@@ -1,8 +1,9 @@
 package com.jahra.controller;
 
+import com.jahra.service.BlogService;
+import com.jahra.service.TagService;
 import com.jahra.service.UserService;
 import com.jahra.service.dto.BlogDTO;
-import com.jahra.service.BlogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -25,12 +26,18 @@ public class UserDashboardController {
     @Autowired
     UserService userService;
 
+    @Autowired
+    TagService tagService;
+
     @RequestMapping
     public String dashBoard(ModelMap model, Principal principal) {
         String view = DASHBOARD_VIEW;
         if (!isUserHasBlog(principal)) {
             view = "redirect:/dashboard/create";
         }
+        model.addAttribute("blog", blogService.getCurrentUserBlog());
+        model.addAttribute("articles", blogService.getCurrentUserArticles());
+        //tagService.getPopularTags(new PageRequest(0, 3));
         return view;
     }
 

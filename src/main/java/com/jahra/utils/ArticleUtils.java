@@ -1,6 +1,12 @@
 package com.jahra.utils;
 
+import com.jahra.model.Article;
+import com.jahra.model.Tag;
+import org.apache.commons.lang3.StringUtils;
+
 import java.text.SimpleDateFormat;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author a.vorushenko
@@ -29,8 +35,15 @@ public final class ArticleUtils {
         return dateFormat;
     }
 
+    public static String createArticleUrl(Article article) {
+        return ArticleUtils.tranliteString(
+                article.getBlog().getName())
+                + "/"
+                + ArticleUtils.tranliteString(article.getTitle());
+    }
 
-    public static String getUrl(String title){
+
+    public static String tranliteString(String title){
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < title.length(); i++) {
             for(int x = 0; x < abcCyr.length; x++ )
@@ -39,5 +52,10 @@ public final class ArticleUtils {
                 }
         }
         return builder.toString();
+    }
+
+    public static String getTagsWithSeparator(List<Tag> tags) {
+        return StringUtils.join(tags.stream()
+                .map(tag -> tag.getName()).collect(Collectors.toList()), ",");
     }
 }

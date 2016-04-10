@@ -1,6 +1,7 @@
 package com.jahra.controller;
 
 import com.jahra.repository.UserRepository;
+import com.jahra.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -15,6 +16,9 @@ import java.security.Principal;
 @RequestMapping("/")
 public class MainPageController {
 
+
+    @Autowired
+    TagService service;
     @Autowired
     UserRepository userService;
     @RequestMapping

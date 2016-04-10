@@ -1,14 +1,14 @@
 package com.jahra.model;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.io.Serializable;
 
 /**
  * @author a.vorushenko
  */
 @Entity
 @Table(name = "token")
-public class Token {
+public class Token implements Serializable {
 
     @Id
     @SequenceGenerator(name = "token_id_generator", sequenceName = "token_id_seq")

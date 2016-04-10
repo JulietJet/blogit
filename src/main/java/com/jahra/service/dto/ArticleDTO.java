@@ -2,8 +2,11 @@ package com.jahra.service.dto;
 
 import com.jahra.model.Article;
 import com.jahra.utils.ArticleUtils;
+import org.apache.commons.lang.StringUtils;
 
 import java.text.ParseException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by Артём on 01.02.2016.
@@ -15,6 +18,15 @@ public class ArticleDTO {
     private String content;
     private String url;
     private String creationDate;
+    private List<String> tags;
+
+    public List<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<String> tags) {
+        this.tags = tags;
+    }
 
     public Long getId() {
         return id;
@@ -64,7 +76,9 @@ public class ArticleDTO {
         try {
             article.setTitle(dto.getTitle());
             article.setContent(dto.getContent());
-            article.setCreationDate(ArticleUtils.getSimpleDateFormat().parse(dto.getCreationDate()));
+            if (StringUtils.isNotEmpty(dto.getCreationDate())) {
+                article.setCreationDate(ArticleUtils.getSimpleDateFormat().parse(dto.getCreationDate()));
+            }
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -79,10 +93,11 @@ public class ArticleDTO {
         dto.setId(article.getId());
         dto.setContent(article.getContent());
         dto.setTitle(article.getTitle());
-        dto.setUrl(ArticleUtils.getUrl(article.getBlog().getName())
+        dto.setUrl(ArticleUtils.tranliteString(article.getBlog().getName())
                 + "/" + article.getId() + "/"
-                + ArticleUtils.getUrl(article.getTitle()));
+                + ArticleUtils.tranliteString(article.getTitle()));
         dto.setCreationDate(ArticleUtils.getSimpleDateFormat().format(article.getCreationDate()));
+        dto.setTags(article.getTags().stream().map(s -> s.getName()).collect(Collectors.toList()));
         return dto;
     }
 
